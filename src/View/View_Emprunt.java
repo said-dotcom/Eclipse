@@ -49,6 +49,7 @@ public class View_Emprunt {
 		frame.getContentPane().add(editorPane);
 		
 		JPanel panel = new JPanel();
+		
 		panel.setBounds(108, 92, 266, 124);
 		frame.getContentPane().add(panel);
 		
