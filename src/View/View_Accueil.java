@@ -24,106 +24,108 @@ import javax.swing.JLabel;
 
 public class View_Accueil {
 
-	private JFrame frame;
-	protected View_Catalogue View_Accueil;
+    private JFrame frame;
+    protected View_Catalogue View_Accueil;
 
+    /**
+     * Create the application.
+     */
+    public View_Accueil() throws SQLException, ClassNotFoundException {
+        MainMVC.getM().getall();
+        initialize();
+        frame.setVisible(true);
+    }
 
-
-	/**
-	 * Create the application.
-	 */
-	public View_Accueil() throws SQLException, ClassNotFoundException{
-		MainMVC.getM().getall();
-		initialize();
-		frame.setVisible(true);
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		JButton btnNewButton = new JButton("Catalogue");
-		btnNewButton.setBounds(112, 74, 184, 23);
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					View_Accueil = new View_Catalogue() ;
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});
-		frame.getContentPane().setLayout(null);
-		frame.getContentPane().add(btnNewButton);
-		//**************************************************************************
-		JButton btnCompte = new JButton("Compte");
-		
-		//pour que le boutton va vers la page du compte 
-		
-		btnCompte.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					// la variable qui permet de l'exécuté 
-					View_Compte a = new View_Compte();
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});
-		btnCompte.setBounds(112, 127, 184, 23);
-		frame.getContentPane().add(btnCompte);
-		//**************************************************************************
-		JButton btnEmprunt = new JButton("Emprunt");
-		btnEmprunt.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					View_Emprunt b = new View_Emprunt();
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});
-		btnEmprunt.setBounds(24, 177, 184, 23);
-		frame.getContentPane().add(btnEmprunt);
-		
-		//**************************************************************************
-		JButton btnRestutiait = new JButton("Restituer");
-		btnRestutiait.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					View_Restitution c = new View_Restitution();
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});
-		
-		btnRestutiait.setBounds(242, 177, 184, 23);
-		frame.getContentPane().add(btnRestutiait);
-		
-		JLabel lblNewLabel = new JLabel("ACCUEIL");
-		lblNewLabel.setFont(new Font("Arial Black", Font.PLAIN, 15));
-		lblNewLabel.setBounds(169, 32, 86, 31);
-		frame.getContentPane().add(lblNewLabel);
-	}
+    /**
+     * Initialize the contents of the frame.
+     */
+    private void initialize() {
+        frame = new JFrame();
+        frame.setBounds(100, 100, 450, 300);  // Remis à 300 (hauteur originale)
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        JButton btnNewButton = new JButton("Catalogue");
+        btnNewButton.setBounds(112, 74, 184, 23);
+        btnNewButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    View_Accueil = new View_Catalogue();
+                } catch (ClassNotFoundException e1) {
+                    e1.printStackTrace();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+        frame.getContentPane().setLayout(null);
+        frame.getContentPane().add(btnNewButton);
+        
+        //**************************************************************************
+        JButton btnCompte = new JButton("Compte");
+        
+        btnCompte.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    View_Compte a = new View_Compte();
+                } catch (ClassNotFoundException e1) {
+                    e1.printStackTrace();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+        btnCompte.setBounds(112, 127, 184, 23);
+        frame.getContentPane().add(btnCompte);
+        
+        //**************************************************************************
+        JButton btnEmprunt = new JButton("Emprunt");
+        btnEmprunt.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    View_Emprunt b = new View_Emprunt();
+                } catch (ClassNotFoundException e1) {
+                    e1.printStackTrace();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+        btnEmprunt.setBounds(24, 177, 184, 23);
+        frame.getContentPane().add(btnEmprunt);
+        
+        //**************************************************************************
+        JButton btnRestutiait = new JButton("Restituer");
+        btnRestutiait.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    View_Restitution c = new View_Restitution();
+                } catch (ClassNotFoundException e1) {
+                    e1.printStackTrace();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+        btnRestutiait.setBounds(242, 177, 184, 23);
+        frame.getContentPane().add(btnRestutiait);
+        
+        //**************************************************************************
+        // BOUTON ADMIN SEULEMENT (avec mot de passe)
+        //**************************************************************************
+        JButton btnAdmin = new JButton("Admin");
+        btnAdmin.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Ouvre la page de mot de passe
+                new View_mdp();
+            }
+        });
+        btnAdmin.setBounds(112, 210, 184, 23);
+        frame.getContentPane().add(btnAdmin);
+        
+        //**************************************************************************
+        JLabel lblNewLabel = new JLabel("ACCUEIL");
+        lblNewLabel.setFont(new Font("Arial Black", Font.PLAIN, 15));
+        lblNewLabel.setBounds(169, 32, 86, 31);
+        frame.getContentPane().add(lblNewLabel);
+    }
 }

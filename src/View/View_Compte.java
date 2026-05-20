@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import Controller.MainMVC;
+import model.ADHERENT;
 
 public class View_Compte {
 
@@ -32,17 +33,14 @@ public class View_Compte {
         lblNum.setBounds(74, 26, 49, 14);
         frame.getContentPane().add(lblNum);
 
-        // Champ de saisie du numéro
         JEditorPane editorPane = new JEditorPane();
         editorPane.setBounds(159, 26, 107, 20);
         frame.getContentPane().add(editorPane);
 
-        // Bouton OK
         JButton btnOk = new JButton("OK");
         btnOk.setBounds(320, 22, 89, 23);
         frame.getContentPane().add(btnOk);
 
-        // Labels
         JLabel lblPrenom = new JLabel("Prenom");
         lblPrenom.setBounds(63, 89, 49, 23);
         frame.getContentPane().add(lblPrenom);
@@ -55,7 +53,6 @@ public class View_Compte {
         lblEmail.setBounds(63, 176, 49, 23);
         frame.getContentPane().add(lblEmail);
 
-        // Panneaux blancs pour afficher les infos
         Panel panelPrenom = new Panel();
         panelPrenom.setBackground(Color.WHITE);
         panelPrenom.setBounds(140, 89, 147, 23);
@@ -71,22 +68,20 @@ public class View_Compte {
         panelEmail.setBounds(140, 176, 226, 23);
         frame.getContentPane().add(panelEmail);
 
-        // Labels internes pour afficher les infos utilisateur - declaration de la variables
         JLabel lblPrenomValue = new JLabel("");
         JLabel lblNomValue = new JLabel("");
         JLabel lblEmailValue = new JLabel("");
         
-        //Pour ajouter les valeur dans les panels
         panelPrenom.add(lblPrenomValue);
         panelNom.add(lblNomValue);
         panelEmail.add(lblEmailValue);
 
-        // Bouton Accueil
         JButton btnAccueil = new JButton("Accueil");
         btnAccueil.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
                     View_Accueil h = new View_Accueil();
+                    frame.dispose();
                 } catch (ClassNotFoundException | SQLException e1) {
                     e1.printStackTrace();
                 }
@@ -95,44 +90,23 @@ public class View_Compte {
         btnAccueil.setBounds(177, 216, 89, 23);
         frame.getContentPane().add(btnAccueil);
 
-        // --- ACTION DU BOUTON OK ---
+        // ACTION DU BOUTON OK (CORRIGÉ)
         btnOk.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String numero = editorPane.getText().trim();
-
-                // ⚙️ Exemple temporaire : données simulées (tu remplaceras avec ta BDD) On ajoute manuellement
-                if (numero.equals("1")) {
-                    lblPrenomValue.setText("Jean");
-                    lblNomValue.setText("Dupont");
-                    lblEmailValue.setText("jean.dupont@email.com");
-                } else if (numero.equals("2")) {
-                    lblPrenomValue.setText("Marie");
-                    lblNomValue.setText("Durand");
-                    lblEmailValue.setText("marie.durand@email.com");
-                } else if (numero.equals("3")) {
-                    lblPrenomValue.setText("Paul");
-                    lblNomValue.setText("Nguyen");
-                    lblEmailValue.setText("paul.nguyen@example.com");
-                }
-                else {
-                	lblPrenomValue.setText("Inconnu");
+                
+                // UTILISATION DE VOTRE MODÈLE
+                ADHERENT adherent = MainMVC.getM().findadherentbynum(numero);
+                
+                if (adherent != null) {
+                    lblPrenomValue.setText(adherent.getPrenom());
+                    lblNomValue.setText(adherent.getNom());
+                    lblEmailValue.setText(adherent.getEmail());
+                } else {
+                    lblPrenomValue.setText("Inconnu");
                     lblNomValue.setText("Inconnu");
                     lblEmailValue.setText("Inconnu");
                 }
-                
-                // lier avec la base de donnees
-
-                // 🧩 Si tu veux lier avec ton modèle MVC :
-                // Utilisateur u = mainMVC.getM().getByNum(numero);
-                // if (u != null) {
-                //     lblPrenomValue.setText(u.getPrenom());
-                //     lblNomValue.setText(u.getNom());
-                //     lblEmailValue.setText(u.getEmail());
-                // } else {
-                //     lblPrenomValue.setText("Inconnu");
-                //     lblNomValue.setText("Inconnu");
-                //     lblEmailValue.setText("Inconnu");
-                // }
             }
         });
     }
